@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #fff8f0;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;  
+    }
+    .recipe-card {
+        max-width: 600px;
+        width: 100%;
+        background: #fff;
+        border-radius: 66px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        padding: 24px;
+        text-align: center;  
+        background-image: url(Mac.jpg);
+        background-repeat: no-repeat;
+        background-size: 1800px;
+    }
+    h1 {
+        color: #d35400;
+        font-size: 40px;
+    }
+    h1:hover {
+        color: #f39c12;
+    }
+    h2 {
+        color: #d35400;
+        font-size: 30px;
+    }
+    h2:hover {
+        color: #f39c12;
+    }
+    .recipe-image {
+       height: 250px;
+       border-radius: 10px;
+       margin-left: 20px;
+    }
+    .recipe-image:hover {
+       transform: scale(1.05);
+    }
+    .prep-info {
+       font-size: 0.95rem;
+       color: #0b0b0b;
+       margin-bottom: 20px;
+    }
+    .prep-info:hover {
+        font-size: 1.10rem;
+    }
+    button {
+        border: 2px solid black;
+        padding: 10px 16px;
+        background-color: #f39c12;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    button:hover {
+        background-color: #d35400;
+    }
+    ul,
+    ol {
+        text-align: left;
+        margin: 10px 0;
+        padding-left: 20px;
+        color: #0f0f0f;
+    }
+    .hidden  {
+        display: none;
+    }
+    li {
+        margin: 8px 0;
+    }
+    li.active {
+        background-color: #ffe5b4;
+        border-left: 4px solid #e67e22;
+        padding-left: 10px;
+    }
+    @media (max-width: 480px) {
+  .recipe-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .prep-info {
+    font-size: 0.9rem;
+  }
+
+  button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+    margin: 6px 0;
+  }
+
+  .recipe-image {
+    width: 100%;
+    height: auto;
+    margin: 1em 0;
+  }
+
+  ul, ol {
+    padding-left: 16px;
+  }
+}
+@media (min-width: 481px) and (max-width: 768px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  .prep-info {
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .recipe-image {
+    height: auto;
+    max-height: 300px;
+  }
+}
+@media (min-width: 769px) {
+  .recipe-card {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  button {
+    max-width: 300px;
+  }
+
+  .recipe-image {
+    max-height: 250px;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <div class="recipe-card">
+        <h1>Recipe Cart</h1>
+        <h2>Mac and Cheese Pasta</h2>
+        <img src="Mac.jpg" class="recipe-image">
+        <div class="prep-info">
+            <p> 🕛 Prep Time: 15 mins | 🍳 Cook Time: 25 mins | 🍽 Serves: 4</p>
+        </div>
+        <button onclick="toggleSection('ingredients')">Show Ingredients</button>
+        <ul id="ingredients" class="hidden">
+            <li>Macaroni Pasta</li>
+            <li>2 tbsp Butter</li>
+            <li>2 tbsp Flour</li>
+            <li>2 cups Milk</li>
+            <li>2 slice Cheese</li>
+            <li>Salt and Pepper</li>
+            <li>Bread crumbs</li>
+        </ul>
+        <button onclick="toggleSection('Steps')">Instructions</button>
+        <ol id="steps" class="hidden">
+            <li>Boil macaroni and drain and set aside.</li>
+            <li>Saucepan melt butter over medium heat.Stir in flour to form a roux.</li>
+            <li>Gradually add milk while stirring. Cook until thickened.</li>
+            <li>Stir in cheddar cheese until melted and smooth.</li>
+            <li>Add cooked macaroni to the cheese sauce. Mix well.</li>
+            <li>Optional: Transfer to a baking dish, sprinkle with breadcrumbs, and broil until golden.</li>
+            <li>Serve hot and enjoy!</li> 
+        </ol>
+
+        <button onclick="startCooking()">Start Cooking</button>
+        <button onclick="nextStep()">Next Step</button>
+    </div>
+    <script>
+        let currentStepIndex = 3; // Keeps track of the current step
+
+function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId.toLowerCase());
+    section.classList.toggle('hidden');
+}
+
+function startCooking() {
+    const steps = document.querySelectorAll('#steps li');
+    document.getElementById('steps').classList.remove('hidden');
+    
+    // Reset all steps
+    steps.forEach(step => step.classList.remove('active'));
+    currentStepIndex = 0;
+    steps[currentStepIndex].classList.add('active');
+}
+
+function nextStep() {
+    const steps = document.querySelectorAll('#steps li');
+    if (currentStepIndex >= 0 && currentStepIndex < steps.length - 1) {
+        steps[currentStepIndex].classList.remove('active');
+        currentStepIndex++;
+        steps[currentStepIndex].classList.add('active');
+    } else if (currentStepIndex === steps.length - 1) {
+        alert("You're done! Enjoy your meal 😊");
+    } else {
+        alert("Click 'Start Cooking' first!");
+    }
+}
+    </script>
+</body>
+</html>
